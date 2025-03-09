@@ -1,0 +1,47 @@
+{
+  "user_id": "BMW789",
+  "personal_info": {
+    "name": "Mehmet",
+    "surname": "Kaya",
+    "email": "mehmet.kaya@example.com",
+    "phone": "0535789012"
+  },
+  "car_info": {
+    "model": "BMW X5",
+    "year": 2020,
+    "plate": "34CC789",
+    "color": "Gri"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 7,
+    "start_date": "2023-02-05",
+    "end_date": "2024-02-05"
+  },
+  "wash_history": [
+    {
+      "date": "2023-04-10",
+      "station_id": "IST004",
+      "service_type": "Premium Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-06-25",
+      "station_id": "IST002",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 4
+    }
+  ],
+  "favorite_locations": [
+    "Üsküdar",
+    "Ataşehir"
+  ],
+  "last_known_location": {
+    "city": "İstanbul",
+    "district": "Ataşehir",
+    "coordinates": {
+      "lat": 40.9923,
+      "lng": 29.1244
+    }
+  }
+}

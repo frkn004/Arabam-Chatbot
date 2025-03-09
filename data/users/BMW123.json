@@ -1,0 +1,47 @@
+{
+  "user_id": "BMW123",
+  "personal_info": {
+    "name": "Ahmet Yılmaz",
+    "surname": "Öztürk",
+    "email": "ahmet.ozturk@example.com",
+    "phone": "0532123456"
+  },
+  "car_info": {
+    "model": "BMW 3 Serisi",
+    "year": 2021,
+    "plate": "34AA123",
+    "color": "Siyah"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 0,
+    "start_date": "2023-01-15",
+    "end_date": "2024-01-15"
+  },
+  "wash_history": [
+    {
+      "date": "2023-02-10",
+      "station_id": "IST001",
+      "service_type": "Premium Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-04-22",
+      "station_id": "IST004",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 4
+    }
+  ],
+  "favorite_locations": [
+    "Kadıköy",
+    "Üsküdar"
+  ],
+  "last_known_location": {
+    "city": "İstanbul",
+    "district": "Kadıköy",
+    "coordinates": {
+      "lat": 40.9928,
+      "lng": 29.0265
+    }
+  }
+}

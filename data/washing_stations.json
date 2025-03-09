@@ -1,0 +1,154 @@
+{
+  "stations": [
+    {
+      "id": "IST001",
+      "name": "Premium İstanbul Kadıköy Yıkama",
+      "address": "Caferağa Mah. Moda Cad. No:120, Kadıköy, İstanbul",
+      "location": "Kadıköy",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 40.9928,
+        "lng": 29.0265
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.8,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama"]
+    },
+    {
+      "id": "IST002",
+      "name": "Beşiktaş Autocare",
+      "address": "Sinanpaşa Mah. Ortabahçe Cad. No:24, Beşiktaş, İstanbul",
+      "location": "Beşiktaş",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.0422,
+        "lng": 29.0093
+      },
+      "wash_time_minutes": 45,
+      "rating": 4.5,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Motor Yıkama"]
+    },
+    {
+      "id": "IST003",
+      "name": "Ataşehir Oto Yıkama",
+      "address": "Atatürk Mah. Meriç Cad. No:15, Ataşehir, İstanbul",
+      "location": "Ataşehir",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 40.9923,
+        "lng": 29.1244
+      },
+      "wash_time_minutes": 25,
+      "rating": 4.2,
+      "type": "normal",
+      "services": ["İç Yıkama", "Dış Yıkama"]
+    },
+    {
+      "id": "IST004",
+      "name": "Üsküdar Premium Oto Bakım",
+      "address": "Bulgurlu Mah. Alemdağ Cad. No:56, Üsküdar, İstanbul",
+      "location": "Üsküdar",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.0212,
+        "lng": 29.0547
+      },
+      "wash_time_minutes": 35,
+      "rating": 4.7,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "İç Detaylı Temizlik"]
+    },
+    {
+      "id": "IST005",
+      "name": "Şişli Oto Yıkama",
+      "address": "Merkez Mah. Darülaceze Cad. No:23, Şişli, İstanbul",
+      "location": "Şişli",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.0630,
+        "lng": 28.9916
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.1,
+      "type": "normal",
+      "services": ["İç Yıkama", "Dış Yıkama"]
+    },
+    {
+      "id": "ANK001",
+      "name": "Çankaya Premium Oto Bakım",
+      "address": "Çankaya Cad. No:45, Çankaya, Ankara",
+      "location": "Çankaya",
+      "city": "Ankara",
+      "coordinates": {
+        "lat": 39.9027,
+        "lng": 32.8351
+      },
+      "wash_time_minutes": 40,
+      "rating": 4.9,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama", "Koltuk Temizliği"]
+    },
+    {
+      "id": "ANK002",
+      "name": "Atakule Oto Yıkama",
+      "address": "Çankaya Kızılırmak Mah. No:12, Atakule, Ankara",
+      "location": "Atakule",
+      "city": "Ankara",
+      "coordinates": {
+        "lat": 39.8837,
+        "lng": 32.8597
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.6,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama"]
+    },
+    {
+      "id": "ANK003",
+      "name": "Kızılay Oto Bakım",
+      "address": "Kızılay Mah. Ziya Gökalp Cad. No:7, Çankaya, Ankara",
+      "location": "Kızılay",
+      "city": "Ankara",
+      "coordinates": {
+        "lat": 39.9208,
+        "lng": 32.8541
+      },
+      "wash_time_minutes": 25,
+      "rating": 4.3,
+      "type": "normal",
+      "services": ["İç Yıkama", "Dış Yıkama"]
+    },
+    {
+      "id": "ANK004",
+      "name": "Keçiören Auto Care",
+      "address": "Etlik Mah. Yunus Emre Cad. No:34, Keçiören, Ankara",
+      "location": "Keçiören",
+      "city": "Ankara",
+      "coordinates": {
+        "lat": 39.9794,
+        "lng": 32.8429
+      },
+      "wash_time_minutes": 35,
+      "rating": 4.4,
+      "type": "normal",
+      "services": ["İç Yıkama", "Dış Yıkama", "Koltuk Temizliği"]
+    },
+    {
+      "id": "ANK005",
+      "name": "Eryaman Premium Yıkama",
+      "address": "2. Etap Mah. 312. Cad. No:65, Eryaman, Ankara",
+      "location": "Eryaman",
+      "city": "Ankara",
+      "coordinates": {
+        "lat": 39.9703,
+        "lng": 32.6525
+      },
+      "wash_time_minutes": 40,
+      "rating": 4.8,
+      "type": "premium",
+      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama"]
+    }
+  ]
+} 

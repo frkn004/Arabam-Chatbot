@@ -1,0 +1,47 @@
+{
+  "user_id": "BMW456",
+  "personal_info": {
+    "name": "Ayşe",
+    "surname": "Demir",
+    "email": "ayse.demir@example.com",
+    "phone": "0533456789"
+  },
+  "car_info": {
+    "model": "BMW 5 Serisi",
+    "year": 2022,
+    "plate": "34BB456",
+    "color": "Beyaz"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 1,
+    "start_date": "2023-03-10",
+    "end_date": "2024-03-10"
+  },
+  "wash_history": [
+    {
+      "date": "2023-05-15",
+      "station_id": "IST002",
+      "service_type": "Premium Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-07-20",
+      "station_id": "IST001",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 4
+    }
+  ],
+  "favorite_locations": [
+    "Beşiktaş",
+    "Şişli"
+  ],
+  "last_known_location": {
+    "city": "İstanbul",
+    "district": "Beşiktaş",
+    "coordinates": {
+      "lat": 41.0422,
+      "lng": 29.0093
+    }
+  }
+}

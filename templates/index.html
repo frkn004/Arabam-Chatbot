@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arabamı Yıka - Chatbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/material_blue.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: linear-gradient(120deg, rgba(240, 249, 255, 0.6) 0%, rgba(214, 234, 247, 0.4) 100%);
+            min-height: 100vh;
+            position: relative;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23007bff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: -1;
+        }
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 18px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.12), 0 15px 35px rgba(0, 0, 0, 0.08);
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 0.5rem auto;
+                border-radius: 12px;
+                max-width: 95%;
+            }
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #0056b3 0%, #1a91ff 100%);
+            color: white;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .chat-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+        .app-title {
+            font-weight: 700;
+            margin: 0.5rem 0;
+            font-size: 1.8rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .chat-messages {
+            height: 500px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background-color: #f9fafc;
+            scroll-behavior: smooth;
+            background-image: linear-gradient(120deg, rgba(240, 249, 255, 0.6) 0%, rgba(214, 234, 247, 0.4) 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .chat-messages {
+                height: calc(100vh - 200px);
+                padding: 1rem;
+            }
+        }
+        .user-message, .bot-message {
+            max-width: 75%;
+            padding: 1rem 1.3rem;
+            margin-bottom: 1.2rem;
+            word-break: break-word;
+            animation: fadeInSlide 0.4s ease-out;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .user-message, .bot-message {
+                max-width: 85%;
+                padding: 0.8rem 1rem;
+                margin-bottom: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+        .user-message {
+            background-color: #e6f7ff;
+            margin-left: auto;
+            border: 1px solid #91d5ff;
+            border-radius: 20px 20px 4px 20px;
+            background-image: linear-gradient(135deg, #e6f7ff 0%, #d4ebff 100%);
+        }
+        .bot-message {
+            background-color: #f0f0f0;
+            margin-right: auto;
+            border: 1px solid #d9d9d9;
+            border-radius: 20px 20px 20px 4px;
+            background-image: linear-gradient(135deg, #f8f8f8 0%, #eeeeee 100%);
+        }
+        .chat-input {
+            display: flex;
+            padding: 1.25rem;
+            background-color: white;
+            border-top: 1px solid #eee;
+            position: relative;
+            z-index: 2;
+            background-image: linear-gradient(to bottom, #ffffff 0%, #f9fafc 100%);
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 0.85rem 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            margin-right: 0.8rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .chat-input input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+        }
+        .chat-input button {
+            padding: 0.85rem 1.8rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            background-image: linear-gradient(135deg, #0056b3 0%, #1a91ff 100%);
+            border: none;
+        }
+        .option-button {
+            margin: 0.25rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .code-input {
+            display: none;
+            margin-top: 1rem;
+        }
+        .loading {
+            text-align: center;
+            padding: 1.5rem;
+            display: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+            width: 80%;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .loading .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        .bmw-logo {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+        .logo {
+            max-height: 60px;
+            margin: 0 10px;
+        }
+        .main-logo {
+            max-height: 80px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .developer-logo {
+            max-height: 40px;
+            opacity: 0.8;
+        }
+        .quick-reply-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem auto;
+            animation: slideUp 0.5s ease-out;
+            justify-content: center;
+            max-width: 95%;
+        }
+        
+        @media (max-width: 768px) {
+            .quick-reply-buttons {
+                gap: 0.5rem;
+                margin: 1rem auto;
+            }
+        }
+        .quick-reply-buttons button {
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin: 0.25rem;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(200, 200, 200, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .quick-reply-buttons button {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+                margin: 0.15rem;
+            }
+        }
+        .quick-reply-buttons button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: 0.5s;
+        }
+        .quick-reply-buttons button:hover::before {
+            left: 100%;
+        }
+        .quick-reply-buttons button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.1), 0 5px 5px rgba(0,0,0,0.1);
+        }
+        .date-option-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 25px !important;
+            padding: 12px 18px !important;
+            margin-bottom: 8px;
+            cursor: pointer;
+            font-weight: 500 !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.07);
+            margin: 0 auto;
+            max-width: fit-content;
+        }
+        .date-option-btn:hover {
+            background-color: #e9ecef;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1) !important;
+        }
+        .station-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid #0056b3;
+            transition: all 0.3s ease;
+        }
+        .station-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .station-card h4 {
+            margin-top: 0;
+            color: #0056b3;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .station-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .station-rating {
+            color: #f8c01a;
+            margin-bottom: 5px;
+        }
+        .station-address, .station-distance, .station-time, .station-services {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+            color: #444;
+        }
+        .recommendation {
+            background-color: #f0f8ff;
+            border-left: 4px solid #00a0ff;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .confirmation-card {
+            background-color: #e6ffe6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #00cc00;
+        }
+        .confirmation-card h3 {
+            color: #006600;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+        .confirmation-detail {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+        .calendar-picker {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 15px auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            animation: fadeIn 0.5s ease;
+            max-width: 90%;
+        }
+        .calendar-picker h5 {
+            color: #0056b3;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 2px solid #e6f2ff;
+            padding-bottom: 8px;
+        }
+        .time-slots {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 15px;
+        }
+        .time-slot-btn {
+            padding: 10px 15px;
+            border-radius: 20px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            background-image: linear-gradient(to bottom, #f8f8f8 0%, #eeeeee 100%);
+        }
+        .time-slot-btn:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+            background-image: linear-gradient(to bottom, #e9f5ff 0%, #d4ebff 100%);
+        }
+        .time-slot-btn.btn-primary {
+            animation: pulse 1s infinite;
+            animation-delay: 0.2s;
+            background-image: linear-gradient(135deg, #0056b3 0%, #1a91ff 100%);
+            color: white;
+            border-color: #0056b3;
+        }
+        .time-slot-booked {
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+            text-decoration: line-through;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .time-slot-booked:hover {
+            background-color: #f8d7da;
+            transform: none;
+        }
+        .date-select-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .date-select-title {
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #0056b3;
+        }
+        .calendar-toggle-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #0056b3;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .calendar-toggle-btn i {
+            font-size: 1.2rem;
+        }
+        .alternative-times {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .alt-time-btn {
+            background-color: #e9f5ff;
+            border: 1px solid #99ccff;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+        .alt-time-btn:hover {
+            background-color: #cce5ff;
+        }
+        .station-card h5 {
+            color: #0056b3;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .station-card .btn-primary {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .station-card .btn-primary:hover {
+            background-color: #003d80;
+        }
+        .calendar-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .calendar-container .form-control {
+            padding: 12px 15px;
+            font-size: 1rem;
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            cursor: pointer;
+        }
+        .calendar-container .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25);
+        }
+        .calendar-container::after {
+            content: '\f073';
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            right: 15px;
+            top: 12px;
+            color: #0056b3;
+            pointer-events: none;
+        }
+        .flatpickr-day.selected, 
+        .flatpickr-day.startRange, 
+        .flatpickr-day.endRange, 
+        .flatpickr-day.selected.inRange, 
+        .flatpickr-day.startRange.inRange, 
+        .flatpickr-day.endRange.inRange, 
+        .flatpickr-day.selected:focus, 
+        .flatpickr-day.startRange:focus, 
+        .flatpickr-day.endRange:focus, 
+        .flatpickr-day.selected:hover, 
+        .flatpickr-day.startRange:hover, 
+        .flatpickr-day.endRange:hover, 
+        .flatpickr-day.selected.prevMonthDay, 
+        .flatpickr-day.startRange.prevMonthDay, 
+        .flatpickr-day.endRange.prevMonthDay, 
+        .flatpickr-day.selected.nextMonthDay, 
+        .flatpickr-day.startRange.nextMonthDay, 
+        .flatpickr-day.endRange.nextMonthDay {
+            background: #0056b3;
+            border-color: #0056b3;
+        }
+        .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)), 
+        .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)), 
+        .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)) {
+            box-shadow: -10px 0 0 #0056b3;
+        }
+        .flatpickr-day.today {
+            border-color: #0056b3;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .btn-primary, .btn-success {
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover, .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .weather-forecast {
+            background-color: #f0f8ff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .weather-comment {
+            font-style: italic;
+            color: #0056b3;
+            margin: 8px 0;
+            padding-left: 10px;
+            border-left: 3px solid #cce5ff;
+        }
+        .reminder-note {
+            background-color: #fff8e6;
+            padding: 10px;
+            border-radius: 5px;
+            color: #856404;
+            border-left: 3px solid #ffeeba;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+        .footer-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        .footer-logo:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .btn {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover:after {
+            left: 100%;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.15), 0 5px 5px rgba(0,0,0,0.12);
+        }
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        /* Emoji Animations */
+        .emoji-pop {
+            display: inline-block;
+            animation: emojiBounce 0.5s ease;
+        }
+        
+        @keyframes emojiBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        /* Enhanced Mobile Styles */
+        @media (max-width: 768px) {
+            .app-title {
+                font-size: 1.5rem;
+            }
+            
+            .chat-input input {
+                padding: 0.6rem 1rem;
+            }
+            
+            .chat-input button {
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .station-card {
+                padding: 12px;
+            }
+            
+            .main-logo {
+                max-height: 60px;
+            }
+            
+            .footer-logo {
+                width: 60px;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+        /* Mobil için ek CSS değişkenleri */
+        :root {
+            --vh: 1vh;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-messages {
+                height: calc(var(--vh, 1vh) * 100 - 200px);
+            }
+        }
+        /* Mikrofon butonu stilleri */
+        .mic-button {
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .mic-button i {
+            font-size: 1.2rem;
+        }
+        
+        .mic-button:hover {
+            background-color: #e9f5ff;
+        }
+        
+        .mic-tooltip {
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            top: -70px;
+            max-width: 220px;
+            animation: fadeInUp 0.3s ease;
+            border-left: 4px solid #0056b3;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <img src="/static/images/arabamiyika.png" alt="Arabamı Yıka Logo" class="logo main-logo">
+                <h2 class="app-title">Arabamı Yıka Chatbot</h2>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mesajlar burada gösterilecek -->
+            </div>
+            <div class="loading" id="loading">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Yükleniyor...</span>
+                </div>
+                <p class="mt-2">Yanıt bekleniyor...</p>
+            </div>
+            <div id="calendarPicker" class="calendar-picker" style="display:none;">
+                <h5><i class="fas fa-calendar-alt"></i> Randevu Tarihi ve Saati Seçin</h5>
+                <div class="calendar-container">
+                    <input type="text" id="datePicker" class="form-control" placeholder="Tarih seçmek için tıklayın">
+                </div>
+                <div class="mt-4">
+                    <h5><i class="fas fa-clock"></i> Uygun Saatler</h5>
+                    <div class="time-slots" id="timeSlots">
+                        <!-- Saat seçenekleri burada oluşturulacak -->
+                    </div>
+                </div>
+                <div class="mt-4 d-flex justify-content-end">
+                    <button id="confirmDateTime" class="btn btn-lg btn-primary">
+                        <i class="fas fa-check-circle"></i> Randevu Oluştur
+                    </button>
+                </div>
+            </div>
+            <div id="quickReplyButtons" class="quick-reply-buttons">
+                <!-- Hızlı cevap butonları burada oluşturulacak -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Bir mesaj yazın..." class="form-control">
+                <button id="micButton" class="btn btn-outline-primary mic-button" title="Sesli mesaj (Çok yakında!)">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button id="sendButton" class="btn btn-primary">Gönder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sağ alt köşede logo -->
+    <img src="/static/images/duftech.png" alt="DufTech Logo" class="footer-logo">
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/tr.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const sendButton = document.getElementById('sendButton');
+            const loading = document.getElementById('loading');
+            const quickReplyButtons = document.getElementById('quickReplyButtons');
+            const calendarPicker = document.getElementById('calendarPicker');
+            const datePicker = document.getElementById('datePicker');
+            const timeSlots = document.getElementById('timeSlots');
+            const confirmDateTime = document.getElementById('confirmDateTime');
+            
+            let chatHistory = [];
+            let userState = {};
+            let selectedDate = null;
+            let selectedTime = null;
+            
+            // Flatpickr tarih seçici
+            const datePickerInstance = flatpickr(datePicker, {
+                dateFormat: "d F Y",
+                minDate: "today",
+                locale: "tr",
+                disableMobile: true,
+                animate: true,
+                showMonths: 1,
+                static: true,
+                position: "auto",
+                monthSelectorType: "dropdown",
+                nextArrow: '<i class="fa fa-chevron-right"></i>',
+                prevArrow: '<i class="fa fa-chevron-left"></i>',
+                onChange: function(selectedDates, dateStr) {
+                    selectedDate = dateStr;
+                    updateTimeSlots();
+                    
+                    // Animasyon efekti
+                    timeSlots.classList.add('fade-in');
+                    setTimeout(() => timeSlots.classList.remove('fade-in'), 500);
+                }
+            });
+            
+            // Saat seçeneklerini oluştur
+            function updateTimeSlots() {
+                timeSlots.innerHTML = '';
+                
+                // Yarım saat aralıklı saatler
+                const morningSlots = ["08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30"];
+                // Öğleden sonra saatleri
+                const afternoonSlots = ["13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"];
+                
+                // Rastgele dolu saatler oluştur (istasyona ve tarihe göre sabit olması için)
+                const selectedDateObj = selectedDate ? new Date(selectedDate) : new Date();
+                const dateString = selectedDateObj.toISOString().split('T')[0];
+                const randomSeed = dateString.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+                
+                // Dolu saatlerin listesi (pseudorandom)
+                const getRandomSlots = (slots, count, seed) => {
+                    const randomIndices = [];
+                    const pseudoRandom = (n) => ((seed * n) % 997) / 997; // Basit pseudorandom fonksiyon
+                    
+                    for (let i = 0; i < slots.length; i++) {
+                        if (pseudoRandom(i) < 0.4) { // %40 olasılıkla bir slot dolu olacak
+                            randomIndices.push(i);
+                            if (randomIndices.length >= count) break;
+                        }
+                    }
+                    return randomIndices.map(idx => slots[idx]);
+                };
+                
+                const bookedMorningSlots = getRandomSlots(morningSlots, 4, randomSeed);
+                const bookedAfternoonSlots = getRandomSlots(afternoonSlots, 5, randomSeed + 123);
+                
+                // Başlık ekle
+                const morningTitle = document.createElement('div');
+                morningTitle.className = 'w-100 mb-2';
+                morningTitle.innerHTML = '<strong>Sabah</strong>';
+                timeSlots.appendChild(morningTitle);
+                
+                // Sabah saatlerini ekle
+                morningSlots.forEach(time => {
+                    const isBooked = bookedMorningSlots.includes(time);
+                    addTimeSlot(time, isBooked);
+                });
+                
+                // Başlık ekle
+                const afternoonTitle = document.createElement('div');
+                afternoonTitle.className = 'w-100 mb-2 mt-3';
+                afternoonTitle.innerHTML = '<strong>Öğleden Sonra</strong>';
+                timeSlots.appendChild(afternoonTitle);
+                
+                // Öğleden sonra saatlerini ekle
+                afternoonSlots.forEach(time => {
+                    const isBooked = bookedAfternoonSlots.includes(time);
+                    addTimeSlot(time, isBooked);
+                });
+            }
+            
+            // Saat seçeneği butonunu ekle
+            function addTimeSlot(time, isBooked = false) {
+                const button = document.createElement('button');
+                button.className = isBooked ? 'time-slot-btn time-slot-booked' : 'time-slot-btn';
+                button.textContent = time;
+                
+                if (isBooked) {
+                    button.disabled = true;
+                    button.title = "Bu saat dolu";
+                } else {
+                    button.addEventListener('click', function() {
+                        // Diğer butonlardan active sınıfını kaldır
+                        document.querySelectorAll('.time-slot-btn:not(.time-slot-booked)').forEach(btn => {
+                            btn.classList.remove('btn-primary');
+                            btn.classList.add('btn-outline-primary');
+                        });
+                        
+                        // Bu butona active sınıfını ekle
+                        button.classList.remove('btn-outline-primary');
+                        button.classList.add('btn-primary');
+                        
+                        selectedTime = time;
+                    });
+                }
+                
+                timeSlots.appendChild(button);
+            }
+            
+            // Randevu onaylama butonuna tıklandığında
+            confirmDateTime.addEventListener('click', function() {
+                if (selectedDate && selectedTime) {
+                    const fullDateTime = `${selectedDate} ${selectedTime}`;
+                    calendarPicker.style.display = 'none';
+                    appendMessage('user', fullDateTime);
+                    callChatbotAPI(fullDateTime);
+                } else {
+                    alert('Lütfen tarih ve saat seçin');
+                }
+            });
+            
+            // Sayfa yüklendiğinde hoş geldin mesajını göster
+            sendBotMessage("Merhaba, Arabamı Yıka'ya hoş geldiniz! Size nasıl yardımcı olabilirim?");
+            showOptions();
+            
+            // Gönder butonu tıklandığında
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Enter tuşuna basıldığında
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Mesaj gönderme fonksiyonu
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+                
+                // Kullanıcı mesajını ekrana yaz
+                appendMessage('user', message);
+                userInput.value = '';
+                
+                // Chatbot API'sini çağır
+                callChatbotAPI(message);
+            }
+            
+            // Chatbot API'sini çağır
+            function callChatbotAPI(message) {
+                loading.style.display = 'block';
+                
+                fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        history: chatHistory,
+                        state: userState
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    loading.style.display = 'none';
+                    
+                    if (data.error) {
+                        sendBotMessage("Üzgünüm, bir hata oluştu: " + data.error);
+                    } else {
+                        chatHistory = data.history;
+                        userState = data.state;
+                        sendBotMessage(data.response);
+                        
+                        // Durum kontrolü için olay dinleyicileri
+                        console.log("Current user state:", userState);
+                        
+                        // Takvim gösterme kontrolü
+                        if (userState.calendar_needed) {
+                            calendarPicker.style.display = 'block';
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        } else {
+                            calendarPicker.style.display = 'none';
+                        }
+                        
+                        // Hızlı cevap butonlarını kontrol et
+                        updateQuickReplyButtons();
+                    }
+                })
+                .catch(error => {
+                    loading.style.display = 'none';
+                    sendBotMessage("Bağlantı hatası oluştu. Lütfen tekrar deneyin.");
+                    console.error('Error:', error);
+                });
+            }
+            
+            // Duruma göre hızlı cevap butonlarını güncelle
+            function updateQuickReplyButtons() {
+                // Önce mevcut butonları temizle
+                quickReplyButtons.innerHTML = '';
+                
+                if (userState.asking_car_selection) {
+                    // Kendi aracım veya başka araç seçenekleri
+                    addQuickReplyButton("Kendi aracım", "kendi aracım");
+                    addQuickReplyButton("Başka araç", "başka araç");
+                }
+                else if (userState.asking_location) {
+                    // Yaygın konumlar için kısayollar
+                    const locationContainer = document.createElement('div');
+                    locationContainer.className = 'date-select-container';
+                    
+                    const locationTitle = document.createElement('div');
+                    locationTitle.className = 'date-select-title';
+                    locationTitle.innerHTML = '<strong>Popüler Konumlar:</strong>';
+                    locationContainer.appendChild(locationTitle);
+                    quickReplyButtons.appendChild(locationContainer);
+                    
+                    // Ankara konumları (İstanbul seçenekleri çıkarıldı)
+                    addQuickReplyButton("Ankara Çankaya", "Ankara Çankaya");
+                    addQuickReplyButton("Ankara Kentpark", "Kentpark AVM");
+                    addQuickReplyButton("Ankara Atakule", "Atakule");
+                    addQuickReplyButton("Ankara Armada AVM", "Armada AVM");
+                }
+                else if (userState.selecting_station && userState.nearby_stations) {
+                    // İstasyon seçimi için butonlar
+                    for (let i = 0; i < userState.nearby_stations.length; i++) {
+                        const station = userState.nearby_stations[i];
+                        // Sayı butonları yerine istasyon adı butonları 
+                        addQuickReplyButton(`${i+1}. ${station.name}`, `${station.name}`);
+                    }
+                    
+                    // Eğer önerilen istasyon varsa, önerilen istasyon için buton ekle
+                    if (userState.recommended_station) {
+                        const recIndex = userState.nearby_stations.indexOf(userState.recommended_station) + 1;
+                        const recStation = userState.recommended_station;
+                        addQuickReplyButton(`Önerilen: ${recStation.name}`, recStation.name, true);
+                    }
+                    
+                    // Başka yer öner butonu
+                    addQuickReplyButton("Başka yer öner", "başka yer öner", false, "btn-outline-secondary");
+                    
+                    // Eğer önceki istasyonlar varsa
+                    if (userState.previous_stations && userState.previous_stations.length > 0) {
+                        // Önceki istasyon listesine dön butonu
+                        addQuickReplyButton("Önceki istasyonlar", "önceki istasyonları göster", false, "btn-outline-info");
+                    }
+                }
+                else if (userState.scheduling && !userState.calendar_needed) {
+                    // Yaygın tarih ve saatler için kısayollar
+                    const today = new Date();
+                    const tomorrow = new Date(today);
+                    tomorrow.setDate(today.getDate() + 1);
+                    
+                    const dayAfterTomorrow = new Date(today);
+                    dayAfterTomorrow.setDate(today.getDate() + 2);
+                    
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    
+                    // Başlık ve takvim seçme konteynerı
+                    const dateSelectContainer = document.createElement('div');
+                    dateSelectContainer.className = 'date-select-container';
+                    
+                    const dateTitle = document.createElement('div');
+                    dateTitle.className = 'date-select-title';
+                    dateTitle.innerHTML = '<strong>Önerilen Tarihler:</strong>';
+                    dateSelectContainer.appendChild(dateTitle);
+                    quickReplyButtons.appendChild(dateSelectContainer);
+                    
+                    // Tarih butonları özel sınıfla
+                    const todayBtn = document.createElement('button');
+                    todayBtn.className = 'date-option-btn';
+                    todayBtn.innerHTML = `<span>📅</span> <span>Bugün 13:30</span>`;
+                    todayBtn.addEventListener('click', function() {
+                        // Tıklama efekti
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 100);
+                        
+                        appendMessage('user', `Bugün 13:30`);
+                        callChatbotAPI(`${today.toLocaleDateString('tr-TR', options)} 13:30`);
+                    });
+                    quickReplyButtons.appendChild(todayBtn);
+                    
+                    const tomorrowBtn = document.createElement('button');
+                    tomorrowBtn.className = 'date-option-btn';
+                    tomorrowBtn.innerHTML = `<span>📅</span> <span>Yarın 10:30</span>`;
+                    tomorrowBtn.addEventListener('click', function() {
+                        appendMessage('user', `Yarın 10:30`);
+                        callChatbotAPI(`${tomorrow.toLocaleDateString('tr-TR', options)} 10:30`);
+                    });
+                    quickReplyButtons.appendChild(tomorrowBtn);
+                    
+                    const afterTomorrowBtn = document.createElement('button');
+                    afterTomorrowBtn.className = 'date-option-btn';
+                    afterTomorrowBtn.innerHTML = `<span>📅</span> <span>${dayAfterTomorrow.toLocaleDateString('tr-TR', { weekday: 'long' })} 15:30</span>`;
+                    afterTomorrowBtn.addEventListener('click', function() {
+                        appendMessage('user', `${dayAfterTomorrow.toLocaleDateString('tr-TR', { weekday: 'long' })} 15:30`);
+                        callChatbotAPI(`${dayAfterTomorrow.toLocaleDateString('tr-TR', options)} 15:30`);
+                    });
+                    quickReplyButtons.appendChild(afterTomorrowBtn);
+                    
+                    // Takvimden seçme butonu
+                    const calendarButton = document.createElement('button');
+                    calendarButton.className = 'btn btn-outline-info calendar-toggle-btn mx-auto d-block mt-3';
+                    calendarButton.innerHTML = '<span>📅</span> <span>Takvimden Tarih Seç</span>';
+                    calendarButton.addEventListener('click', function() {
+                        // Takvimi göster/gizle
+                        if (calendarPicker.style.display === 'none' || !calendarPicker.style.display) {
+                            calendarPicker.style.display = 'block';
+                            chatMessages.scrollTop = chatMessages.scrollHeight + 500; // Takvimin görünmesi için scroll
+                        } else {
+                            calendarPicker.style.display = 'none';
+                        }
+                    });
+                    quickReplyButtons.appendChild(calendarButton);
+                }
+            }
+            
+            // Hızlı cevap butonu ekle
+            function addQuickReplyButton(text, value, isRecommended = false, customClass = null) {
+                const button = document.createElement('button');
+                if (customClass) {
+                    button.className = customClass;
+                } else {
+                    button.className = isRecommended ? 
+                        'btn btn-success' : 
+                        'btn btn-outline-primary';
+                }
+                button.textContent = text;
+                
+                // Animasyon için gecikme ekle
+                const delay = quickReplyButtons.childElementCount * 50;
+                button.style.opacity = '0';
+                button.style.transform = 'translateY(20px)';
+                
+                button.addEventListener('click', function() {
+                    // Tıklama efekti
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 100);
+                    
+                    appendMessage('user', text);
+                    callChatbotAPI(value);
+                });
+                
+                quickReplyButtons.appendChild(button);
+                
+                // Animasyon uygula
+                setTimeout(() => {
+                    button.style.opacity = '1';
+                    button.style.transform = 'translateY(0)';
+                }, delay + 10);
+            }
+            
+            // Bot mesajı gönder
+            function sendBotMessage(message) {
+                appendMessage('bot', message);
+            }
+            
+            // Mesajı ekrana ekle
+            function appendMessage(sender, message) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+                
+                // Emojiyi animasyonlu hale getir
+                message = animateEmojis(message);
+                
+                // HTML içerik olarak ayarla (istasyon kartları için)
+                messageDiv.innerHTML = message;
+                
+                // Animasyon için yeni sınıf ekle
+                setTimeout(() => {
+                    messageDiv.style.opacity = '1';
+                    messageDiv.style.transform = 'translateY(0)';
+                }, 10);
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Emojileri animasyonlu hale getir
+            function animateEmojis(html) {
+                // Emoji regex (https://stackoverflow.com/questions/10992921/how-to-remove-emoji-code-using-javascript)
+                const emojiRegex = /(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|\ud83c[\ude32-\ude3a]|\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])/g;
+                
+                return html.replace(emojiRegex, match => `<span class="emoji-pop">${match}</span>`);
+            }
+            
+            // Seçenekleri göster
+            function showOptions() {
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'bot-message';
+                
+                const optionsText = document.createElement('p');
+                optionsText.textContent = 'Lütfen aşağıdaki seçeneklerden birini seçin:';
+                optionsDiv.appendChild(optionsText);
+                
+                const optionsButtonsDiv = document.createElement('div');
+                optionsButtonsDiv.className = 'd-flex flex-wrap justify-content-center';
+                
+                const options = [
+                    { text: "BMW Premium Selection'luyum", value: "BMW Premium Selection'luyum", icon: "bmw" },
+                    { text: "Garanti BBVA yıkama", value: "Garanti BBVA yıkama" },
+                    { text: "Yıkama randevusu", value: "Yıkama randevusu" }
+                ];
+                
+                options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'btn btn-outline-primary option-button';
+                    
+                    // Animasyon için gecikme ekle
+                    const delay = index * 150;
+                    button.style.opacity = '0';
+                    button.style.transform = 'translateY(20px)';
+                    
+                    if (option.icon === "bmw") {
+                        const img = document.createElement('img');
+                        img.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1200px-BMW.svg.png';
+                        img.alt = 'BMW Logo';
+                        img.className = 'bmw-logo';
+                        button.innerHTML = `<div class="d-flex flex-column align-items-center">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/1200px-BMW.svg.png" alt="BMW Logo" style="width:25px; margin-right:5px;">
+                                            <span>${option.text}</span>
+                                            </div>`;
+                    } else {
+                        button.textContent = option.text;
+                    }
+                    
+                    button.addEventListener('click', function() {
+                        // Tıklama efekti
+                        this.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                        }, 100);
+                        
+                        appendMessage('user', option.text);
+                        callChatbotAPI(option.value);
+                    });
+                    
+                    optionsButtonsDiv.appendChild(button);
+                    
+                    // Animasyon uygula
+                    setTimeout(() => {
+                        button.style.opacity = '1';
+                        button.style.transform = 'translateY(0)';
+                    }, delay + 10);
+                });
+                
+                optionsDiv.appendChild(optionsButtonsDiv);
+                chatMessages.appendChild(optionsDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Alternatif zaman seçimi
+            window.selectAlternativeTime = function(timeStr) {
+                appendMessage('user', timeStr);
+                callChatbotAPI(timeStr);
+            };
+            
+            // Alternatif istasyon seçimi
+            window.selectNewStation = function(stationName, timeStr) {
+                const message = `${stationName} istasyonunda ${timeStr} için randevu istiyorum`;
+                appendMessage('user', message);
+                callChatbotAPI(message);
+            };
+            
+            // Sayfa yüklendiğinde logoyu animasyonla göster
+            const footerLogo = document.querySelector('.footer-logo');
+            if (footerLogo) {
+                footerLogo.style.opacity = '0';
+                footerLogo.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    footerLogo.style.opacity = '0.7';
+                    footerLogo.style.transform = 'translateY(0)';
+                }, 1000);
+            }
+            
+            // Mobil cihazlarda viewport yüksekliğini ayarla
+            function setMobileHeight() {
+                if (window.innerWidth <= 768) {
+                    const vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    chatMessages.style.height = `calc(var(--vh, 1vh) * 100 - 200px)`;
+                }
+            }
+            
+            // Sayfa yüklendiğinde ve boyutu değiştiğinde çağır
+            window.addEventListener('resize', setMobileHeight);
+            setMobileHeight();
+            
+            // Mikrofon butonuna tıklandığında
+            const micButton = document.getElementById('micButton');
+            micButton.addEventListener('click', function() {
+                // Tooltip oluştur
+                const tooltip = document.createElement('div');
+                tooltip.className = 'mic-tooltip';
+                tooltip.innerHTML = '<strong>🎙️ Sesli Sohbet Özelliği</strong><br>Bu özellik ile sesli sohbet ederek randevu oluşturabilirsiniz. Bu özellik çok yakında hizmetinizde olacaktır! 😊';
+                
+                // Pozisyon ayarla
+                const chatInput = document.querySelector('.chat-input');
+                chatInput.style.position = 'relative';
+                chatInput.appendChild(tooltip);
+                
+                // 5 saniye sonra kaldır
+                setTimeout(() => {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.transform = 'translateY(10px)';
+                    setTimeout(() => tooltip.remove(), 300);
+                }, 5000);
+                
+                // Mikrofon animasyonu
+                this.classList.add('btn-primary');
+                this.classList.remove('btn-outline-primary');
+                setTimeout(() => {
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-outline-primary');
+                }, 1000);
+            });
+        });
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

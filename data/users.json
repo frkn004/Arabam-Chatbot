@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "code": "BMW123",
+      "name": "Ahmet Yılmaz",
+      "surname": "Öztürk",
+      "plate": "34AA123",
+      "remaining_washes": 5,
+      "car_model": "BMW 3 Serisi"
+    },
+    {
+      "code": "BMW456",
+      "name": "Ayşe",
+      "surname": "Demir",
+      "plate": "34BB456",
+      "remaining_washes": 3,
+      "car_model": "BMW 5 Serisi"
+    },
+    {
+      "code": "BMW789",
+      "name": "Mehmet",
+      "surname": "Kaya",
+      "plate": "34CC789",
+      "remaining_washes": 8,
+      "car_model": "BMW X5"
+    }
+  ]
+} 
