@@ -13,8 +13,8 @@
     "color": "Siyah"
   },
   "membership": {
-    "type": "BMW Premium Selection",
-    "remaining_washes": 10,
+    "type": "BMW Prime",
+    "remaining_washes": 9,
     "start_date": "2023-01-15",
     "end_date": "2024-01-15"
   },

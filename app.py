@@ -713,10 +713,10 @@ def chat():
                 plate = user_data['car_info']['plate']
                 remaining_washes = user_data['membership']['remaining_washes']
                 
-                bot_message = f"Merhaba {name} {surname}! BMW Premium Selection üyeliğiniz doğrulandı.\n"
-                bot_message += f"Aracınız: {car_model} (Plaka: {plate})\n"
-                bot_message += f"Kalan yıkama hakkınız: {remaining_washes}\n\n"
-                bot_message += "Kendi aracınız için mi yoksa başka bir araç için mi yıkama randevusu oluşturmak istiyorsunuz?"
+                bot_message = f"Merhaba {name} {surname}! 🎉\n\n"
+                bot_message += f"BMW Prime üyeliğiniz başarıyla doğrulandı.\n\n"
+                bot_message += f"🚘 Aracınız: {car_model} (Plaka: {plate})\n\n"
+                bot_message += "Yıkama randevunuzu kendi aracınız için mi, yoksa başka bir araç için mi oluşturmak istersiniz? 😊"
                 
                 # Durum güncellemesi
                 user_state = {
@@ -1377,9 +1377,9 @@ def chat():
                     bot_message += f"  <div class='weather-comment'>{weather_forecast['comment']}</div>\n"
                     
                     # Hatırlatma mesajı
-                    bot_message += f"  <div class='reminder-note mt-3'>✉️ Randevunuzdan 30 dakika önce hatırlatma mesajı gönderilecektir.</div>\n"
+                    bot_message += f"  <div class='reminder-note mt-3'>🔔 Hatırlatma:\nRandevunuzdan 30 dakika önce size bir hatırlatma mesajı gönderilecektir.</div>\n"
                     bot_message += f"</div>\n\n"
-                    bot_message += "Randevunuz oluşturuldu. Başka bir konuda yardıma ihtiyacınız olursa bana yazabilirsiniz."
+                    bot_message += "✅ Randevunuz başarıyla oluşturuldu!\nSana en iyi deneyimi yaşatmak için istasyonumuzu bildiriyoruz. Memnun kalmadığın durumlarda bize 08503036291 numaralı müşteri hizmetlerimizden bize ulaşmaktan lütfen çekinme 🫡"
                     
                     # Kullanıcı kodu varsa, kullanıcı bilgilerini güncelle
                     if user_state.get('own_car') and user_state.get('user_code'):
@@ -1534,9 +1534,9 @@ def chat():
                         bot_message += f"  <div class='weather-comment'>{weather_forecast['comment']}</div>\n"
                         
                         # Hatırlatma mesajı
-                        bot_message += f"  <div class='reminder-note mt-3'>✉️ Randevunuzdan 30 dakika önce hatırlatma mesajı gönderilecektir.</div>\n"
+                        bot_message += f"  <div class='reminder-note mt-3'>🔔 Hatırlatma:\nRandevunuzdan 30 dakika önce size bir hatırlatma mesajı gönderilecektir.</div>\n"
                         bot_message += f"</div>\n\n"
-                        bot_message += "Randevunuz oluşturuldu. Başka bir konuda yardıma ihtiyacınız olursa bana yazabilirsiniz."
+                        bot_message += "✅ Randevunuz başarıyla oluşturuldu!\nSana en iyi deneyimi yaşatmak için istasyonumuzu bildiriyoruz. Memnun kalmadığın durumlarda bize 08503036291 numaralı müşteri hizmetlerimizden bize ulaşmaktan lütfen çekinme 🫡"
                         
                         # Kullanıcı kodu varsa, kullanıcı bilgilerini güncelle
                         if user_state.get('own_car') and user_state.get('user_code'):
@@ -1576,8 +1576,8 @@ def chat():
         
         else:
             # Normal chatbot yanıtı
-            if "bmw premium selection" in user_message.lower():
-                bot_message = "BMW Premium Selection üyeliğinizi doğrulamak için lütfen üyelik kodunuzu girin:"
+            if "bmw prime" in user_message.lower():
+                bot_message = "Hoş geldin, Seçkin BMW Prime Üyesi ✨En az aracındaki sürüş konforu kadar harika bir oto yıkama deneyimi yaşatacağız sana🫧🚘\nLütfen BMW Prime Card Numaranızı Yazın"
                 user_state = {
                     'verify_code': True
                 }
@@ -1589,7 +1589,7 @@ def chat():
                     response = openai.ChatCompletion.create(
                         model="gpt-3.5-turbo",
                         messages=[
-                            {"role": "system", "content": "Sen 'arabamıyıka ai asistanı' web sitesinin samimi, yardımcı ve uzman chatbotusun. Araç yıkama ve bakım konusunda detaylı bilgiye sahipsin. \n\n1. Kullanıcılarla samimi ve dostça konuş. Uygun emojiler kullan (😊, 👍, 🚗, 🧼, ✨, vs.) ama abartma, mesaj başına 1-2 emoji yeterli.\n\n2. Yanıtların kısa, öz ve samimi olsun. Sanki bir arkadaşla konuşur gibi doğal bir dil kullan.\n\n3. İstasyonlar hakkında bilgi verirken:\n- Çankaya Premium Oto Bakım: Premium hizmet sunan, el ile detaylı yıkama yapan, özel nano-seramik koruma ve cilalama hizmetleri sunan üst segment bir istasyon. Mikrofiber bez ve özel formüllü ürünler kullanılarak fırçasız yıkama tekniği uygulanır. ✨\n- Kızılay Oto Bakım: Standart hizmetler sunan, yarı otomatik yıkama sistemlerine sahip orta segment bir istasyon. 🧽\n- Atakule Oto Yıkama: Premium özellikler taşıyan, özellikle jant ve motor temizliğinde uzmanlaşmış bir istasyon. İç temizlikte buharlı temizlik sistemleri kullanır. 💫\n\n4. Yıkama tekniklerini açıklarken:\n- Fırçasız yıkama (touchless): Mikrofiber bezler ve yüksek kaliteli ürünlerle yapılan el yıkaması 🧤\n- Otomatik yıkama: Yumuşak fırçalı, boyaya zarar vermeyen sistemler 🚿\n- Detaylı temizlik: Özel temizleyiciler, buharlı temizlik, vakumlu sistemler 🔍\n\n5. Randevu ve bakım işlemlerinde tüm detayları açıkla ve ne zaman hazır olacağını belirt.\n\n6. Randevu iptal veya değişiklik taleplerine şu şekilde yanıt ver: 'Randevu iptal/değişiklik talebiniz alınmıştır. Teknik ekibimiz sizi en kısa sürede arayacaktır. 📞'\n\n7. Türkçe karakterleri doğru kullan ve samimi bir tonla yaz. 'Siz' yerine 'sen' diye hitap et. Sanki bir arkadaşınla konuşur gibi samimi ol."},
+                            {"role": "system", "content": "Sen 'arabamiyika.com AI Asistanı' web sitesinin samimi, yardımcı ve uzman chatbotusun. Araç yıkama ve bakım konusunda detaylı bilgiye sahipsin. \n\n1. Kullanıcılarla samimi ve dostça konuş. Uygun emojiler kullan (😊, 👍, 🚗, 🧼, ✨, vs.) ama abartma, mesaj başına 1-2 emoji yeterli.\n\n2. Yanıtların kısa, öz ve samimi olsun. Sanki bir arkadaşla konuşur gibi doğal bir dil kullan.\n\n3. İstasyonlar hakkında bilgi verirken:\n- Çankaya Premium Oto Bakım: Premium hizmet sunan, el ile detaylı yıkama yapan, özel nano-seramik koruma ve cilalama hizmetleri sunan üst segment bir istasyon. Mikrofiber bez ve özel formüllü ürünler kullanılarak fırçasız yıkama tekniği uygulanır. ✨\n- Kızılay Oto Bakım: Standart hizmetler sunan, yarı otomatik yıkama sistemlerine sahip orta segment bir istasyon. 🧽\n- Atakule Oto Yıkama: Premium özellikler taşıyan, özellikle jant ve motor temizliğinde uzmanlaşmış bir istasyon. İç temizlikte buharlı temizlik sistemleri kullanır. 💫\n\n4. Yıkama tekniklerini açıklarken:\n- Fırçasız yıkama (touchless): Mikrofiber bezler ve yüksek kaliteli ürünlerle yapılan el yıkaması 🧤\n- Otomatik yıkama: Yumuşak fırçalı, boyaya zarar vermeyen sistemler 🚿\n- Detaylı temizlik: Özel temizleyiciler, buharlı temizlik, vakumlu sistemler 🔍\n\n5. Randevu ve bakım işlemlerinde tüm detayları açıkla ve ne zaman hazır olacağını belirt.\n\n6. Randevu iptal veya değişiklik taleplerine şu şekilde yanıt ver: 'Randevu iptal/değişiklik talebiniz alınmıştır. Teknik ekibimiz sizi en kısa sürede arayacaktır. 📞'\n\n7. Türkçe karakterleri doğru kullan ve samimi bir tonla yaz. 'Siz' yerine 'sen' diye hitap et. Sanki bir arkadaşınla konuşur gibi samimi ol."},
                             *chat_history
                         ]
                     )
@@ -1607,7 +1607,7 @@ def chat():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-# BMW Premium Selection kod doğrulama
+# BMW Prime kod doğrulama
 def verify_bmw_code(code):
     user_data = read_user_data(code)
     if user_data:

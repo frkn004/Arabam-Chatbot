@@ -1,11 +1,11 @@
-# arabamıyıka ai asistanı
+# arabamiyika.com AI Asistanı
 
 OpenAI API kullanarak geliştirilmiş, araç yıkama hizmeti sunan bir web sitesi için chatbot uygulaması.
 
 ## Özellikler
 
 - Kullanıcılara hoş geldin mesajı ve seçenekler sunma
-- BMW Premium Selection üyelerine özel yıkama hizmeti
+- BMW Prime üyelerine özel yıkama hizmeti
 - Garanti BBVA yıkama hizmeti
 - Yıkama randevusu oluşturma
 - Kişiye özel kod doğrulama sistemi
@@ -43,11 +43,11 @@ python app.py
 ## Kullanım
 
 - Uygulama açıldığında size üç seçenek sunulacak:
-  - BMW Premium Selection'luyum
+  - BMW Prime üyesiyim
   - Garanti BBVA yıkama
   - Yıkama randevusu
   
-- BMW Premium Selection'luyum seçeneğini seçtikten sonra:
+- BMW Prime üyesiyim seçeneğini seçtikten sonra:
   1. Size özel BMW kodunuzu girmeniz istenecek (Örnek: BMW123, BMW456, BMW789)
   2. Doğru kod girildiğinde, aracınız, plaka ve kalan yıkama hakkı bilgileriniz gösterilecek
   3. Kendi aracınız veya başka bir araç için randevu oluşturma seçeneği sunulacak
