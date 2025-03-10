@@ -1,4 +1,4 @@
-# Arabamı Yıka Chatbot
+# arabamıyıka ai asistanı
 
 OpenAI API kullanarak geliştirilmiş, araç yıkama hizmeti sunan bir web sitesi için chatbot uygulaması.
 

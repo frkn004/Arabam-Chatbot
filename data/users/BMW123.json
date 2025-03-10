@@ -14,7 +14,7 @@
   },
   "membership": {
     "type": "BMW Premium Selection",
-    "remaining_washes": 0,
+    "remaining_washes": 10,
     "start_date": "2023-01-15",
     "end_date": "2024-01-15"
   },
@@ -30,11 +30,18 @@
       "station_id": "IST004",
       "service_type": "İç-Dış Yıkama",
       "rating": 4
+    },
+    {
+      "date": "2023-09-15",
+      "station_id": "IST007",
+      "service_type": "Detaylı Temizlik",
+      "rating": 5
     }
   ],
   "favorite_locations": [
     "Kadıköy",
-    "Üsküdar"
+    "Üsküdar",
+    "Sarıyer"
   ],
   "last_known_location": {
     "city": "İstanbul",

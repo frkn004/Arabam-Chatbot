@@ -1,0 +1,48 @@
+{
+  "user_id": "BMW303",
+  "personal_info": {
+    "name": "Seda",
+    "surname": "Gümüş",
+    "email": "seda.gumus@example.com",
+    "phone": "0534303404"
+  },
+  "car_info": {
+    "model": "BMW X1",
+    "year": 2021,
+    "plate": "35SG303",
+    "color": "Kırmızı"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 6,
+    "start_date": "2023-04-10",
+    "end_date": "2024-04-10"
+  },
+  "wash_history": [
+    {
+      "date": "2023-05-18",
+      "station_id": "IST001",
+      "service_type": "Premium Yıkama",
+      "rating": 4
+    },
+    {
+      "date": "2023-08-22",
+      "station_id": "IST004",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 5
+    }
+  ],
+  "favorite_locations": [
+    "Karşıyaka",
+    "Bornova",
+    "Konak"
+  ],
+  "last_known_location": {
+    "city": "İzmir",
+    "district": "Karşıyaka",
+    "coordinates": {
+      "lat": 38.4625,
+      "lng": 27.1506
+    }
+  }
+} 

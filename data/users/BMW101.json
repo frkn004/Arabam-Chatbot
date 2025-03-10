@@ -1,0 +1,48 @@
+{
+  "user_id": "BMW101",
+  "personal_info": {
+    "name": "Zeynep",
+    "surname": "Aslan",
+    "email": "zeynep.aslan@example.com",
+    "phone": "0532101202"
+  },
+  "car_info": {
+    "model": "BMW X3",
+    "year": 2023,
+    "plate": "34ZA101",
+    "color": "Mavi"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 8,
+    "start_date": "2023-03-15",
+    "end_date": "2024-03-15"
+  },
+  "wash_history": [
+    {
+      "date": "2023-04-20",
+      "station_id": "IST001",
+      "service_type": "Premium Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-07-12",
+      "station_id": "IST004",
+      "service_type": "Detaylı İç Temizlik",
+      "rating": 5
+    }
+  ],
+  "favorite_locations": [
+    "Sarıyer",
+    "Etiler",
+    "İstinye"
+  ],
+  "last_known_location": {
+    "city": "İstanbul",
+    "district": "Sarıyer",
+    "coordinates": {
+      "lat": 41.17,
+      "lng": 29.05
+    }
+  }
+} 

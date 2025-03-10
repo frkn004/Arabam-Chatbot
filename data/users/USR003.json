@@ -1,0 +1,41 @@
+{
+  "user_id": "USR003",
+  "personal_info": {
+    "name": "Kemal",
+    "surname": "Aydın",
+    "email": "kemal.aydin@example.com",
+    "phone": "0538003004"
+  },
+  "car_info": {
+    "model": "Volkswagen Passat",
+    "year": 2019,
+    "plate": "35KA003",
+    "color": "Lacivert"
+  },
+  "membership": {
+    "type": "Standart",
+    "remaining_washes": 2,
+    "start_date": "2023-06-20",
+    "end_date": "2024-06-20"
+  },
+  "wash_history": [
+    {
+      "date": "2023-07-05",
+      "station_id": "IST001",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 4
+    }
+  ],
+  "favorite_locations": [
+    "Bornova",
+    "Konak"
+  ],
+  "last_known_location": {
+    "city": "İzmir",
+    "district": "Bornova",
+    "coordinates": {
+      "lat": 38.4677,
+      "lng": 27.2167
+    }
+  }
+} 

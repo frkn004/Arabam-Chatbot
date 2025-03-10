@@ -1,0 +1,54 @@
+{
+  "user_id": "BMW202",
+  "personal_info": {
+    "name": "Emre",
+    "surname": "Yıldız",
+    "email": "emre.yildiz@example.com",
+    "phone": "0533202303"
+  },
+  "car_info": {
+    "model": "BMW 7 Serisi",
+    "year": 2022,
+    "plate": "06EY202",
+    "color": "Siyah"
+  },
+  "membership": {
+    "type": "BMW Premium Selection",
+    "remaining_washes": 14,
+    "start_date": "2023-02-20",
+    "end_date": "2024-02-20"
+  },
+  "wash_history": [
+    {
+      "date": "2023-03-15",
+      "station_id": "ANK001",
+      "service_type": "Premium Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-06-22",
+      "station_id": "ANK002",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 4
+    },
+    {
+      "date": "2023-09-10",
+      "station_id": "ANK005",
+      "service_type": "Cilalama",
+      "rating": 5
+    }
+  ],
+  "favorite_locations": [
+    "Çankaya",
+    "Eryaman",
+    "Kızılay"
+  ],
+  "last_known_location": {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "coordinates": {
+      "lat": 39.9027,
+      "lng": 32.8351
+    }
+  }
+} 

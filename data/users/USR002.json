@@ -1,0 +1,47 @@
+{
+  "user_id": "USR002",
+  "personal_info": {
+    "name": "Fatma",
+    "surname": "Çelik",
+    "email": "fatma.celik@example.com",
+    "phone": "0537002003"
+  },
+  "car_info": {
+    "model": "Audi A4",
+    "year": 2021,
+    "plate": "06FC002",
+    "color": "Siyah"
+  },
+  "membership": {
+    "type": "Standart",
+    "remaining_washes": 5,
+    "start_date": "2023-04-05",
+    "end_date": "2024-04-05"
+  },
+  "wash_history": [
+    {
+      "date": "2023-05-12",
+      "station_id": "ANK001",
+      "service_type": "İç-Dış Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-07-28",
+      "station_id": "ANK002",
+      "service_type": "Premium Yıkama",
+      "rating": 4
+    }
+  ],
+  "favorite_locations": [
+    "Çankaya",
+    "Kızılay"
+  ],
+  "last_known_location": {
+    "city": "Ankara",
+    "district": "Çankaya",
+    "coordinates": {
+      "lat": 39.9027,
+      "lng": 32.8351
+    }
+  }
+} 

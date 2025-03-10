@@ -13,7 +13,12 @@
       "wash_time_minutes": 30,
       "rating": 4.8,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama",
+        "Motor Yıkama"
+      ]
     },
     {
       "id": "IST002",
@@ -28,7 +33,11 @@
       "wash_time_minutes": 45,
       "rating": 4.5,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Motor Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Motor Yıkama"
+      ]
     },
     {
       "id": "IST003",
@@ -43,7 +52,10 @@
       "wash_time_minutes": 25,
       "rating": 4.2,
       "type": "normal",
-      "services": ["İç Yıkama", "Dış Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama"
+      ]
     },
     {
       "id": "IST004",
@@ -58,7 +70,12 @@
       "wash_time_minutes": 35,
       "rating": 4.7,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "İç Detaylı Temizlik"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama",
+        "İç Detaylı Temizlik"
+      ]
     },
     {
       "id": "IST005",
@@ -67,13 +84,16 @@
       "location": "Şişli",
       "city": "İstanbul",
       "coordinates": {
-        "lat": 41.0630,
+        "lat": 41.063,
         "lng": 28.9916
       },
       "wash_time_minutes": 30,
       "rating": 4.1,
       "type": "normal",
-      "services": ["İç Yıkama", "Dış Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama"
+      ]
     },
     {
       "id": "ANK001",
@@ -88,7 +108,13 @@
       "wash_time_minutes": 40,
       "rating": 4.9,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama", "Koltuk Temizliği"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama",
+        "Motor Yıkama",
+        "Koltuk Temizliği"
+      ]
     },
     {
       "id": "ANK002",
@@ -103,7 +129,11 @@
       "wash_time_minutes": 30,
       "rating": 4.6,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama"
+      ]
     },
     {
       "id": "ANK003",
@@ -118,7 +148,10 @@
       "wash_time_minutes": 25,
       "rating": 4.3,
       "type": "normal",
-      "services": ["İç Yıkama", "Dış Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama"
+      ]
     },
     {
       "id": "ANK004",
@@ -133,7 +166,11 @@
       "wash_time_minutes": 35,
       "rating": 4.4,
       "type": "normal",
-      "services": ["İç Yıkama", "Dış Yıkama", "Koltuk Temizliği"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Koltuk Temizliği"
+      ]
     },
     {
       "id": "ANK005",
@@ -148,7 +185,110 @@
       "wash_time_minutes": 40,
       "rating": 4.8,
       "type": "premium",
-      "services": ["İç Yıkama", "Dış Yıkama", "Cilalama", "Motor Yıkama"]
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama",
+        "Motor Yıkama"
+      ]
+    },
+    {
+      "id": "IST006",
+      "name": "Sarıyer Premium Oto Yıkama",
+      "address": "Merkez Mah. Sarıyer Cad. No:45, Sarıyer, İstanbul",
+      "location": "Sarıyer",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.17,
+        "lng": 29.05
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.7,
+      "type": "premium",
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Cilalama",
+        "Motor Yıkama"
+      ]
+    },
+    {
+      "id": "IST007",
+      "name": "Maslak Oto Bakım",
+      "address": "Maslak Mah. Büyükdere Cad. No:123, Sarıyer, İstanbul",
+      "location": "Sarıyer",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.17,
+        "lng": 29.05
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.5,
+      "type": "normal",
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Seramik Kaplama"
+      ]
+    },
+    {
+      "id": "IST008",
+      "name": "Etiler Car Wash",
+      "address": "Etiler Mah. Nisbetiye Cad. No:78, Sarıyer, İstanbul",
+      "location": "Sarıyer",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.17,
+        "lng": 29.05
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.8,
+      "type": "premium",
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Nano Seramik Kaplama",
+        "Detaylı İç Temizlik"
+      ]
+    },
+    {
+      "id": "IST009",
+      "name": "İstinye Oto Kuaför",
+      "address": "İstinye Mah. İstinye Bayırı Cad. No:24, Sarıyer, İstanbul",
+      "location": "Sarıyer",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.17,
+        "lng": 29.05
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.6,
+      "type": "normal",
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "El Cilası",
+        "Jant Temizliği"
+      ]
+    },
+    {
+      "id": "IST010",
+      "name": "Tarabya Oto Yıkama",
+      "address": "Tarabya Mah. Tarabya Bayırı Cad. No:56, Sarıyer, İstanbul",
+      "location": "Sarıyer",
+      "city": "İstanbul",
+      "coordinates": {
+        "lat": 41.17,
+        "lng": 29.05
+      },
+      "wash_time_minutes": 30,
+      "rating": 4.4,
+      "type": "normal",
+      "services": [
+        "İç Yıkama",
+        "Dış Yıkama",
+        "Buharlı Temizlik"
+      ]
     }
   ]
-} 
+}

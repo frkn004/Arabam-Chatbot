@@ -4,37 +4,50 @@
     "name": "Mehmet",
     "surname": "Kaya",
     "email": "mehmet.kaya@example.com",
-    "phone": "0535789012"
+    "phone": "0535789123"
   },
   "car_info": {
     "model": "BMW X5",
-    "year": 2020,
+    "year": 2022,
     "plate": "34CC789",
     "color": "Gri"
   },
   "membership": {
     "type": "BMW Premium Selection",
-    "remaining_washes": 7,
-    "start_date": "2023-02-05",
-    "end_date": "2024-02-05"
+    "remaining_washes": 15,
+    "start_date": "2023-01-05",
+    "end_date": "2024-01-05"
   },
   "wash_history": [
     {
-      "date": "2023-04-10",
-      "station_id": "IST004",
+      "date": "2023-02-18",
+      "station_id": "IST003",
       "service_type": "Premium Yıkama",
       "rating": 5
     },
     {
-      "date": "2023-06-25",
+      "date": "2023-05-30",
       "station_id": "IST002",
       "service_type": "İç-Dış Yıkama",
       "rating": 4
+    },
+    {
+      "date": "2023-08-12",
+      "station_id": "IST004",
+      "service_type": "Motor Yıkama",
+      "rating": 5
+    },
+    {
+      "date": "2023-10-25",
+      "station_id": "IST008",
+      "service_type": "Detaylı Temizlik",
+      "rating": 5
     }
   ],
   "favorite_locations": [
     "Üsküdar",
-    "Ataşehir"
+    "Ataşehir",
+    "Maltepe"
   ],
   "last_known_location": {
     "city": "İstanbul",

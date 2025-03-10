@@ -384,44 +384,93 @@ popular_places = {
     "emaar square": {"city": "İstanbul", "district": "Üsküdar", "coordinates": {"lat": 41.0047, "lng": 29.0567}}
 }
 
-# Konum bilgisini analiz et ve popüler yerleri tanı
+# Konum bilgisini analiz et
 def analyze_location(location_text):
-    # Önce popüler yer kontrolü
-    location_lower = location_text.lower()
+    """Kullanıcının gönderdiği konum bilgisini analiz eder"""
+    print(f"Analyzing location: {location_text}")
     
-    # Popüler bir yer mi kontrol et
-    for place, info in popular_places.items():
-        if place in location_lower:
-            return info
+    # Parse_location fonksiyonunu kullan
+    location_info = parse_location(location_text)
     
-    # Değilse OpenAI ile analiz et
-    try:
-        location_response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "Kullanıcı konum bilgisi verdi. Bu konumu analiz et ve şehir ve semt/ilçe bilgisini çıkar. Kişi bir AVM, mağaza, park ya da bina adı vermişse, bunun nerede olduğunu belirlemeye çalış. Eğer kesin bir konum belirlenemiyorsa, kullanıcıdan daha fazla bilgi iste. Format: {\"city\": \"Şehir\", \"district\": \"Semt/İlçe\"}"},
-                {"role": "user", "content": f"Konum: {location_text}"}
-            ]
-        )
+    if location_info:
+        print(f"Location parsed: {location_info}")
+        return location_info
+    
+    # Konum bulunamadıysa, basit bir analiz yap
+    location_text = location_text.lower()
+    
+    # Şehir ve ilçe analizi
+    city = None
+    district = None
+    
+    # Şehir kontrolü
+    if "istanbul" in location_text:
+        city = "İstanbul"
+    elif "ankara" in location_text:
+        city = "Ankara"
+    elif "izmir" in location_text:
+        city = "İzmir"
         
-        location_analysis = location_response.choices[0].message['content']
-        
-        try:
-            # JSON formatında yanıt almaya çalış
-            location_data = json.loads(location_analysis)
-            if location_data.get('city') and location_data.get('district'):
-                return {
-                    "city": location_data.get('city'),
-                    "district": location_data.get('district'),
-                    "coordinates": {"lat": 0, "lng": 0}  # Varsayılan koordinatlar
-                }
-        except:
-            pass
-    except:
-        pass
+    # İlçe kontrolü
+    if "kadıköy" in location_text or "kadikoy" in location_text:
+        district = "Kadıköy"
+        city = "İstanbul"
+    elif "şişli" in location_text or "sisli" in location_text:
+        district = "Şişli"
+        city = "İstanbul"
+    elif "beşiktaş" in location_text or "besiktas" in location_text:
+        district = "Beşiktaş"
+        city = "İstanbul"
+    elif "ataşehir" in location_text or "atasehir" in location_text:
+        district = "Ataşehir"
+        city = "İstanbul"
+    elif "üsküdar" in location_text or "uskudar" in location_text:
+        district = "Üsküdar"
+        city = "İstanbul"
+    elif "çankaya" in location_text or "cankaya" in location_text:
+        district = "Çankaya"
+        city = "Ankara"
+    elif "kızılay" in location_text or "kizilay" in location_text:
+        district = "Kızılay"
+        city = "Ankara"
+    elif "kentpark" in location_text:
+        district = "Çankaya"
+        city = "Ankara"
     
-    # Eğer analiz edilemezse None döndür
-    return None
+    # Koordinat bilgileri
+    coordinates = {
+        "İstanbul": {"lat": 41.0082, "lng": 28.9784},
+        "Ankara": {"lat": 39.9334, "lng": 32.8597},
+        "İzmir": {"lat": 38.4192, "lng": 27.1287},
+        "Kadıköy": {"lat": 40.9928, "lng": 29.0265},
+        "Beşiktaş": {"lat": 41.0422, "lng": 29.0093},
+        "Şişli": {"lat": 41.0630, "lng": 28.9916},
+        "Ataşehir": {"lat": 40.9923, "lng": 29.1244},
+        "Üsküdar": {"lat": 41.0212, "lng": 29.0547},
+        "Çankaya": {"lat": 39.9030, "lng": 32.8059}
+    }
+    
+    # Bir konum bulunamadıysa null dön
+    if not city and not district:
+        return None
+    
+    # Koordinat bilgisi
+    coords = None
+    if district and district in coordinates:
+        coords = coordinates[district]
+    elif city and city in coordinates:
+        coords = coordinates[city]
+    else:
+        coords = {"lat": 0, "lng": 0}
+    
+    # Sonucu döndür
+    result = {
+        "city": city,
+        "district": district if district else "",
+        "coordinates": coords
+    }
+    
+    return result
 
 # Belirli bir tarih için istasyon bazlı dolu saatleri kontrol eden fonksiyon
 def get_station_specific_booked_times(date_str, station_name):
@@ -1540,7 +1589,7 @@ def chat():
                     response = openai.ChatCompletion.create(
                         model="gpt-3.5-turbo",
                         messages=[
-                            {"role": "system", "content": "Sen 'Arabamı Yıka' web sitesinin samimi, yardımcı ve uzman chatbotusun. Araç yıkama ve bakım konusunda detaylı bilgiye sahipsin. \n\n1. Kullanıcılarla samimi ve dostça konuş. Uygun emojiler kullan (😊, 👍, 🚗, 🧼, ✨, vs.) ama abartma, mesaj başına 1-2 emoji yeterli.\n\n2. Yanıtların kısa, öz ve samimi olsun. Sanki bir arkadaşla konuşur gibi doğal bir dil kullan.\n\n3. İstasyonlar hakkında bilgi verirken:\n- Çankaya Premium Oto Bakım: Premium hizmet sunan, el ile detaylı yıkama yapan, özel nano-seramik koruma ve cilalama hizmetleri sunan üst segment bir istasyon. Mikrofiber bez ve özel formüllü ürünler kullanılarak fırçasız yıkama tekniği uygulanır. ✨\n- Kızılay Oto Bakım: Standart hizmetler sunan, yarı otomatik yıkama sistemlerine sahip orta segment bir istasyon. 🧽\n- Atakule Oto Yıkama: Premium özellikler taşıyan, özellikle jant ve motor temizliğinde uzmanlaşmış bir istasyon. İç temizlikte buharlı temizlik sistemleri kullanır. 💫\n\n4. Yıkama tekniklerini açıklarken:\n- Fırçasız yıkama (touchless): Mikrofiber bezler ve yüksek kaliteli ürünlerle yapılan el yıkaması 🧤\n- Otomatik yıkama: Yumuşak fırçalı, boyaya zarar vermeyen sistemler 🚿\n- Detaylı temizlik: Özel temizleyiciler, buharlı temizlik, vakumlu sistemler 🔍\n\n5. Randevu ve bakım işlemlerinde tüm detayları açıkla ve ne zaman hazır olacağını belirt.\n\n6. Randevu iptal veya değişiklik taleplerine şu şekilde yanıt ver: 'Randevu iptal/değişiklik talebiniz alınmıştır. Teknik ekibimiz sizi en kısa sürede arayacaktır. 📞'\n\n7. Türkçe karakterleri doğru kullan ve samimi bir tonla yaz. 'Siz' yerine 'sen' diye hitap et. Sanki bir arkadaşınla konuşur gibi samimi ol."},
+                            {"role": "system", "content": "Sen 'arabamıyıka ai asistanı' web sitesinin samimi, yardımcı ve uzman chatbotusun. Araç yıkama ve bakım konusunda detaylı bilgiye sahipsin. \n\n1. Kullanıcılarla samimi ve dostça konuş. Uygun emojiler kullan (😊, 👍, 🚗, 🧼, ✨, vs.) ama abartma, mesaj başına 1-2 emoji yeterli.\n\n2. Yanıtların kısa, öz ve samimi olsun. Sanki bir arkadaşla konuşur gibi doğal bir dil kullan.\n\n3. İstasyonlar hakkında bilgi verirken:\n- Çankaya Premium Oto Bakım: Premium hizmet sunan, el ile detaylı yıkama yapan, özel nano-seramik koruma ve cilalama hizmetleri sunan üst segment bir istasyon. Mikrofiber bez ve özel formüllü ürünler kullanılarak fırçasız yıkama tekniği uygulanır. ✨\n- Kızılay Oto Bakım: Standart hizmetler sunan, yarı otomatik yıkama sistemlerine sahip orta segment bir istasyon. 🧽\n- Atakule Oto Yıkama: Premium özellikler taşıyan, özellikle jant ve motor temizliğinde uzmanlaşmış bir istasyon. İç temizlikte buharlı temizlik sistemleri kullanır. 💫\n\n4. Yıkama tekniklerini açıklarken:\n- Fırçasız yıkama (touchless): Mikrofiber bezler ve yüksek kaliteli ürünlerle yapılan el yıkaması 🧤\n- Otomatik yıkama: Yumuşak fırçalı, boyaya zarar vermeyen sistemler 🚿\n- Detaylı temizlik: Özel temizleyiciler, buharlı temizlik, vakumlu sistemler 🔍\n\n5. Randevu ve bakım işlemlerinde tüm detayları açıkla ve ne zaman hazır olacağını belirt.\n\n6. Randevu iptal veya değişiklik taleplerine şu şekilde yanıt ver: 'Randevu iptal/değişiklik talebiniz alınmıştır. Teknik ekibimiz sizi en kısa sürede arayacaktır. 📞'\n\n7. Türkçe karakterleri doğru kullan ve samimi bir tonla yaz. 'Siz' yerine 'sen' diye hitap et. Sanki bir arkadaşınla konuşur gibi samimi ol."},
                             *chat_history
                         ]
                     )
@@ -1596,6 +1645,108 @@ def verify_code():
             "valid": False,
             "message": "Geçersiz kod. Lütfen tekrar deneyin."
         })
+
+# Konum bilgisini işleme
+def parse_location(location_text):
+    """Kullanıcının belirttiği konum bilgisini işler"""
+    location_text = location_text.lower()
+    
+    # Yardımcı fonksiyon: Şehir ve ilçe tespiti
+    def extract_city_district(text):
+        # Büyük şehirleri listele
+        cities = ["istanbul", "ankara", "izmir", "bursa", "antalya", "adana"]
+        
+        # İstanbul'un ilçeleri
+        istanbul_districts = ["kadıköy", "beşiktaş", "şişli", "sarıyer", "beyoğlu", "ataşehir", 
+                            "üsküdar", "fatih", "bakırköy", "bahçelievler", "beylikdüzü", 
+                            "esenyurt", "maltepe", "pendik", "kartal", "tuzla", "ümraniye"]
+        
+        # Ankara'nın ilçeleri
+        ankara_districts = ["çankaya", "keçiören", "etimesgut", "yenimahalle", "mamak", 
+                           "sincan", "altındağ", "gölbaşı", "polatlı", "kızılay", "eryaman"]
+        
+        city = None
+        district = None
+        
+        # Şehir tespiti
+        for c in cities:
+            if c in text:
+                city = c.title()  # İlk harfi büyük
+                break
+        
+        # İlçe tespiti
+        istanbul_match = None
+        ankara_match = None
+        
+        for d in istanbul_districts:
+            if d in text:
+                istanbul_match = d.title()
+                break
+                
+        for d in ankara_districts:
+            if d in text:
+                ankara_match = d.title()
+                break
+        
+        # Şehir-ilçe eşleştirmesi
+        if city == "Istanbul" or istanbul_match:
+            city = "İstanbul"
+            district = istanbul_match
+        elif city == "Ankara" or ankara_match:
+            city = "Ankara"
+            district = ankara_match
+        
+        return city, district
+
+    # Şehir ve ilçe çıkarma
+    city, district = extract_city_district(location_text)
+    
+    # Özel konum eşleştirmeleri
+    if "kentpark" in location_text and not city:
+        city = "Ankara"
+        district = "Çankaya"
+    elif "istinye park" in location_text and not city:
+        city = "İstanbul"
+        district = "Sarıyer"
+    
+    # Genel konum bilgisi kontrolü
+    if not city and not district:
+        return None
+    
+    # Koordinat bilgileri (merkez koordinatları)
+    coordinates = {
+        "İstanbul": {"lat": 41.0082, "lng": 28.9784},
+        "Ankara": {"lat": 39.9334, "lng": 32.8597},
+        "İzmir": {"lat": 38.4192, "lng": 27.1287}
+    }
+    
+    # İlçelerin koordinatları
+    district_coordinates = {
+        "Kadıköy": {"lat": 40.9928, "lng": 29.0265},
+        "Beşiktaş": {"lat": 41.0422, "lng": 29.0093},
+        "Şişli": {"lat": 41.0630, "lng": 28.9916},
+        "Ataşehir": {"lat": 40.9923, "lng": 29.1244},
+        "Üsküdar": {"lat": 41.0212, "lng": 29.0547},
+        "Çankaya": {"lat": 39.9030, "lng": 32.8059},
+        "Sarıyer": {"lat": 41.1700, "lng": 29.0500},
+        "Maslak": {"lat": 41.1700, "lng": 29.0500}
+    }
+    
+    # Geri dönüş değeri için koordinat seçimi
+    selected_coords = None
+    if district and district in district_coordinates:
+        selected_coords = district_coordinates[district]
+    elif city and city in coordinates:
+        selected_coords = coordinates[city]
+    
+    # Sonuç
+    result = {
+        "city": city,
+        "district": district if district else "",
+        "coordinates": selected_coords if selected_coords else {"lat": 0, "lng": 0}
+    }
+    
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True) 

@@ -4,37 +4,44 @@
     "name": "Ayşe",
     "surname": "Demir",
     "email": "ayse.demir@example.com",
-    "phone": "0533456789"
+    "phone": "0532456789"
   },
   "car_info": {
     "model": "BMW 5 Serisi",
-    "year": 2022,
+    "year": 2020,
     "plate": "34BB456",
     "color": "Beyaz"
   },
   "membership": {
     "type": "BMW Premium Selection",
-    "remaining_washes": 1,
-    "start_date": "2023-03-10",
-    "end_date": "2024-03-10"
+    "remaining_washes": 10,
+    "start_date": "2023-02-10",
+    "end_date": "2024-02-10"
   },
   "wash_history": [
     {
-      "date": "2023-05-15",
+      "date": "2023-03-12",
       "station_id": "IST002",
       "service_type": "Premium Yıkama",
+      "rating": 4
+    },
+    {
+      "date": "2023-05-20",
+      "station_id": "IST003",
+      "service_type": "İç-Dış Yıkama",
       "rating": 5
     },
     {
-      "date": "2023-07-20",
+      "date": "2023-08-05",
       "station_id": "IST001",
-      "service_type": "İç-Dış Yıkama",
-      "rating": 4
+      "service_type": "Detaylı İç Temizlik",
+      "rating": 5
     }
   ],
   "favorite_locations": [
     "Beşiktaş",
-    "Şişli"
+    "Şişli",
+    "Maslak"
   ],
   "last_known_location": {
     "city": "İstanbul",
