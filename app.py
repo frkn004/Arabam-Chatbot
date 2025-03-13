@@ -6,16 +6,17 @@ from dotenv import load_dotenv
 import openai
 import glob
 from datetime import datetime
+from functools import lru_cache
 
 # .env dosyasını yükle
 load_dotenv()
 
 # OpenAI API anahtarını ayarla
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")    
 
 app = Flask(__name__)
 
-# Kullanıcı bilgilerini dosyadan oku
+# 1. Veritabanı Optimizasyonu
 def read_user_data(user_code):
     try:
         with open(f'data/users/{user_code}.json', 'r', encoding='utf-8') as file:
@@ -472,7 +473,16 @@ def analyze_location(location_text):
     
     return result
 
-# Belirli bir tarih için istasyon bazlı dolu saatleri kontrol eden fonksiyon
+# 2. Hata Yönetimi İyileştirmesi
+@app.errorhandler(Exception)
+def handle_error(error):
+    return jsonify({
+        "error": str(error),
+        "status": "error"
+    }), 500
+
+# 3. Önbellek Sistemi
+@lru_cache(maxsize=100)
 def get_station_specific_booked_times(date_str, station_name):
     """Belirli bir tarihte ve istasyonda dolu saatleri belirler"""
     # Tarihten ve istasyon adından bir seed oluştur
